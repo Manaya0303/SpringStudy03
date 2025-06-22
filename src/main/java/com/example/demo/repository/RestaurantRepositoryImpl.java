@@ -13,14 +13,31 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
 	
 	private final JdbcTemplate jdbcTemplate;
 	@Override
-	public void add(Restaurant store) {
+	public void add(Restaurant restaurant) {
 		
 		String sql = 
 				"INSERT INTO m_restaurant" +
 				"(restaurant_name, catch_phrase) " +
 				"VALUES (?, ?)";
-		jdbcTemplate.update(sql, store.getRestaurantName(),
-								 store.getCatchPhrase()		);
+		jdbcTemplate.update(sql, restaurant.getRestaurantName(),
+								 restaurant.getCatchPhrase()		);
+	}
+	@Override
+	public void update(Restaurant restaurant) {
+		
+		String sql = 
+				"UPDATE                  " +
+				"	m_restaurant         " +
+				"SET                     " +
+				"	restaurant_name = ? ," +
+				"	catch_phrase = ?     " +
+				"WHERE                   " +
+				"	restaurant_id = ?    ";
+		
+		jdbcTemplate.update(sql,
+				restaurant.getRestaurantName(),
+				restaurant.getCatchPhrase(),
+				restaurant.getRestaurantId()  );
 	}
 	
 }

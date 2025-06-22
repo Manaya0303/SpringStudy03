@@ -7,15 +7,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.entity.SearchedRestaurant;
+import com.example.demo.entity.Restaurant;
 import com.example.demo.form.RestaurantEditForm;
+import com.example.demo.service.EditService;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor
 public class EditController {
-
+	
+	private final EditService service;
+	
 	/*--- 店舗編集画面表示リクエスト ---*/
 	@PostMapping("/show-edit-form")
-	private String showEditForm(@ModelAttribute RestaurantEditForm store) {
+	private String showEditForm(@ModelAttribute RestaurantEditForm form) {
 		
 		return "edit-restaurant";
 	}
@@ -23,7 +29,7 @@ public class EditController {
 	/*--- 店舗編集リクエスト（編集画面より） ---*/
 	@PostMapping("/edit-restaurant")
 	public String editRestaurant(
-			@Validated @ModelAttribute RestaurantEditForm store,
+			@Validated @ModelAttribute RestaurantEditForm form,
 			BindingResult result) {
 		
 		//入力エラーがある場合には、店舗登録画面に戻す
@@ -47,14 +53,12 @@ public class EditController {
 			return "edit-restaurant";
 		}
 		
-		SearchedRestaurant r = new SearchedRestaurant();
+		Restaurant r = new Restaurant();
 		r.setRestaurantId(form.getRestaurantId());
 		r.setRestaurantName(form.getRestaurantName());
 		r.setCatchPhrase(form.getCatchPhrase());
 		
-		//テスト
-		System.out.println("--店舗更新");
-		System.out.println(r);
+		service.edit(r);
 		
 		redirectAttributes.addFlashAttribute("msg", "(店舗更新)");
 		

@@ -26,7 +26,7 @@
 
 	<form th:action="@{/confirm-edit-restaurant}" method="POST"
 			th:object="${restaurantEditForm}">
-		<input type="hidden" th;field="*{restaurantId}">
+		<input type="hidden" th:field="*{restaurantId}">
 		<input type="hidden" th:field="*{restaurantName}">
 		<input type="hidden" th:field="*{catchPhrase}">
 		<input type="submit" value="更新実行" class="btn">

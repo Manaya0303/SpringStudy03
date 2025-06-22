@@ -13,7 +13,7 @@
 			th:object="${restaurantEditForm}">
 		【店舗ID】<br>
 		<p th:text="*{restaurantId}"></p>
-		<input type="hidden" th:field="*{restaurantId}">
+		<input type="hidden" th:field="*{restaurantId}"><br>
 		<div th:if="${#fields.hasErrors('restaurantId')}" th:errors="*{restaurantId}" class="error-msg"></div>
 		<br>
 		【店舗名】<br>
